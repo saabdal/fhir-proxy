@@ -549,8 +549,10 @@ echo "Starting Secure FHIR Proxy App ["$proxyAppName"] deployment..."
 	stepresult=$(az keyvault secret set --vault-name $keyVaultName --name "FP-REDISCONNECTION" --value $redisConnectionString)
 		
 	# Create Proxy function app
-	echo "Creating Secure FHIR Proxy Function App ["$proxyAppName"]..."
-	functionAppHost=$(az functionapp create --subscription $subscriptionId --name $proxyAppName --storage-account $deployPrefix$storageAccountNameSuffix  --plan $deployPrefix$serviceplanSuffix  --resource-group $resourceGroupName --runtime dotnet --os-type Windows --functions-version 3 --tags $TAG --query defaultHostName --output tsv)
+	echo "Creating Secure FHIR Proxy Function App ["$proxyAppName"] with ["$deployPrefix$storage"], ["$TAG"], ["$resourceGroupName"], ["$deployPrefix$serviceplanSuffix"], ["$subscriptionId"]..."
+	functionAppHost=$(az functionapp create --subscription $subscriptionId --name $proxyAppName --storage-account $deployPrefix$storageAccountNameSuffix  
+	--plan $deployPrefix$serviceplanSuffix  --resource-group $resourceGroupName --runtime dotnet 
+	--os-type Windows --functions-version 3 --tags $TAG --query defaultHostName --output tsv)
 
 	echo "FHIR-Proxy Function App Host name = "$functionAppHost
 	
